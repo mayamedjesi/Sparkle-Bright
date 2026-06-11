@@ -864,14 +864,15 @@ body {
 }
 
 .bulkDiscountBadge {
-  font-size: 0.72rem;
+  font-size: clamp(0.6rem, 1vw, 0.72rem);
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--navy);
   background: var(--gold);
-  padding: 0.2rem 0.55rem;
+  padding: clamp(0.15rem, 0.4vw, 0.2rem) clamp(0.35rem, 0.8vw, 0.55rem);
   border-radius: 2px;
+  white-space: nowrap;
 }
 
 /* ── PRODUCTS ────────────────────────────────────── */
