@@ -13,7 +13,7 @@ export default function CtaBand() {
         Tell us about your project — location, scale, timeline — and we&apos;ll
         put together a proposal within 48 hours.
       </p>
-      <a className="btnPrimary" href="mailto:hello@lumencivic.ca">
+      <a className="btnPrimary" href="mailto:hello@sparklebright.ca">
         Request a Quote
       </a>
       <p className="bulkDiscount">
