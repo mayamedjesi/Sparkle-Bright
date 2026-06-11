@@ -1,5 +1,6 @@
 import Link from "next/link";
 import StringLights from "./StringLights";
+import QuoteButton from "./QuoteButton";
 
 export default function Hero() {
   return (
@@ -65,9 +66,7 @@ export default function Hero() {
       </p>
 
       <div className="heroActions">
-        <a className="btnPrimary" href="#contact">
-          Request a Quote
-        </a>
+        <QuoteButton />
         <a className="btnGhost" href="#services">
           Our Services
           <svg

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
+import { useQuoteModal } from "./QuoteModalContext";
 
 const productDropdownItems = [
   { label: "All Products", href: "#products" },
@@ -23,6 +24,7 @@ export default function Nav() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const dropdownRef = useRef<HTMLLIElement>(null);
+  const { openModal } = useQuoteModal();
 
   // Close products dropdown on outside click
   useEffect(() => {
@@ -102,7 +104,7 @@ export default function Nav() {
         </ul>
 
         {/* Desktop CTA */}
-        <a className="navCta navCtaDesktop" href="#contact">Request a Quote</a>
+        <button className="navCta" onClick={openModal} type="button">Request a Quote</button>
 
         {/* Hamburger button (mobile only) */}
         <button
@@ -156,9 +158,9 @@ export default function Nav() {
           <a href="#difference" className="mobileNavLink" onClick={closeMobile}>Why Us</a>
           <a href="#coverage" className="mobileNavLink" onClick={closeMobile}>Coverage</a>
 
-          <a href="#contact" className="btnPrimary mobileNavCta" onClick={closeMobile}>
+          <button className="btnPrimary mobileNavCta" onClick={() => { openModal(); closeMobile(); }} type="button">
             Request a Quote
-          </a>
+          </button>
         </div>
       </div>
     </>
