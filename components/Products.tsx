@@ -55,7 +55,7 @@ const categories = [
         desc: "Shatterproof polycarbonate globes on black wire. Warm white 2700K. Rated for –40°C.",
         tag: null,
         url: "#",
-        image: "https://images.unsplash.com/photo-1606070028456-e93c89c84b13?w=600&h=400&fit=crop",
+        image: "https://images.unsplash.com/photo-1576919228236-a097c32a5cd4?w=600&h=400&fit=crop",
       },
       {
         name: "RGBW Smart Pixel String",
