@@ -1,7 +1,7 @@
 const services = [
   {
     name: "Municipal Streetscapes",
-    desc: "Transform city centres, main streets, and public squares into winter destinations. We handle everything from design to installation and seasonal storage.",
+    desc: "We transform city centres, main streets, and public squares into winter destinations worth travelling to. We design and supply the displays — and coordinate with your local crews who put them up — so your team gets a turnkey look without the overseas guesswork.",
     icon: (
       <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M20 4L4 14V26L20 36L36 26V14L20 4Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
@@ -11,7 +11,7 @@ const services = [
   },
   {
     name: "Commercial Properties",
-    desc: "Hotels, shopping centres, and office towers. We design installations that align with your brand and keep your property prominent through the holiday season.",
+    desc: "Hotels, shopping centres, and office towers that sparkle don't just attract foot traffic — they become landmarks. We design displays that match your brand and make your property the one people remember.",
     icon: (
       <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="4" y="18" width="32" height="18" rx="1" stroke="currentColor" strokeWidth="1.5" />
@@ -22,7 +22,7 @@ const services = [
   },
   {
     name: "Airport Terminals",
-    desc: "High-traffic environments with strict timelines. Our airport-grade installs are built for safety compliance, rapid deployment, and round-the-clock visibility.",
+    desc: "The first impression travellers get of your city is often the airport. Our terminal displays meet strict safety standards, deploy fast, and keep sparkling under round-the-clock traffic.",
     icon: (
       <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M8 36L20 8L32 36" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -33,7 +33,7 @@ const services = [
   },
   {
     name: "Seasonal Programming",
-    desc: "Annual contracts that include design refresh, storage, maintenance, and emergency response — so your team has one less thing to manage each year.",
+    desc: "Annual contracts covering design refresh, secure off-season storage, proactive maintenance, and 5-day emergency replacement — so your city sparkles every season without your team lifting a finger.",
     icon: (
       <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="20" cy="20" r="14" stroke="currentColor" strokeWidth="1.5" />
@@ -43,7 +43,7 @@ const services = [
   },
   {
     name: "Custom Structures",
-    desc: "Arches, canopies, feature trees, and signature installations. Our fabrication team brings original concepts to life for signature civic moments.",
+    desc: "Arches, canopies, feature trees, and signature walk-through displays. When a city wants a truly iconic moment — something that ends up on every visitor's camera roll — our fabrication team builds it from scratch.",
     icon: (
       <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M6 32L34 32" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -54,7 +54,7 @@ const services = [
   },
   {
     name: "LED Retrofit",
-    desc: "Replace aging incandescent and fluorescent displays with energy-efficient LED systems. Most retrofits pay back within two seasons through reduced energy costs.",
+    desc: "Aging incandescent displays drain city budgets and dim city spirits. We replace tired systems with energy-efficient LED, and most retrofits pay back within two seasons through lower operating costs — while looking better than ever.",
     icon: (
       <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M6 20H34" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -73,14 +73,15 @@ export default function Services() {
       <div className="servicesHeader">
         <div className="sectionEyebrow">What We Do</div>
         <h2 className="sectionTitle">
-          Built for Scale,
+          Every Service
           <br />
-          Designed to Endure
+          Designed to Sparkle
         </h2>
         <p className="sectionBody">
-          From downtown main streets to international airports, we deliver
-          lighting installations that withstand the harshest Canadian winters
-          while creating memorable civic experiences.
+          Making Cities Sparkle! isn&apos;t a tagline — it&apos;s the brief we
+          give every project. From a single commercial property to an entire
+          downtown core, we handle the design and supply so your city&apos;s own
+          crews can bring it to life on the ground.
         </p>
       </div>
       <div className="servicesGrid">

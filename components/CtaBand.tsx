@@ -7,13 +7,14 @@ export default function CtaBand() {
         Get Started
       </div>
       <h2 className="ctaBandTitle">
-        Ready to Light
+        Let&apos;s Make Your
         <br />
-        Your City?
+        City Sparkle
       </h2>
       <p className="ctaBandBody">
-        Tell us about your project — location, scale, timeline — and we&apos;ll
-        put together a proposal within 48 hours.
+        Tell us your city, your vision, and your timeline — we&apos;ll send back
+        a proposal within 48 hours. Every great seasonal display starts with
+        a single conversation.
       </p>
       <QuoteButton />
       <p className="bulkDiscount">

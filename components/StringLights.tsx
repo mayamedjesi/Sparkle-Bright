@@ -40,11 +40,17 @@ export default function StringLights() {
           yBase +
           amplitude * droopFactor * 2 +
           Math.sin(t * Math.PI * 3 + phaseShift) * 8;
-        const isGold = Math.random() < 0.3;
+        // Warm palette: amber, gold, warm white, soft orange
+        const rand = Math.random();
+        const color: [number, number, number] =
+          rand < 0.4  ? [255, 179, 71]  :  // amber --ice
+          rand < 0.7  ? [255, 209, 102] :  // gold
+          rand < 0.88 ? [255, 235, 180] :  // warm white
+                        [255, 140, 40];    // deep orange accent
         lights.push({
           x,
           y,
-          color: isGold ? [255, 209, 102] : [79, 195, 247],
+          color,
           baseAlpha: 0.3 + Math.random() * 0.5,
           alpha: 0,
           phase: Math.random() * Math.PI * 2,
@@ -57,7 +63,7 @@ export default function StringLights() {
   }
 
   function drawWire(ctx: CanvasRenderingContext2D, lights: Light[]) {
-    ctx.strokeStyle = "rgba(79,195,247,0.08)";
+    ctx.strokeStyle = "rgba(255,179,71,0.08)";
     ctx.lineWidth = 1;
     for (let s = 0; s < STRINGS; s++) {
       const start = s * BULBS_PER_STRING;

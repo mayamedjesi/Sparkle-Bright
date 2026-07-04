@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { QuoteModalProvider } from "@/components/QuoteModalContext";
+import { CartProvider } from "@/components/CartContext";
+import CartDrawer from "@/components/CartDrawer";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -30,7 +32,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${playfair.variable} ${inter.variable}`}>
-        <QuoteModalProvider>{children}</QuoteModalProvider>
+        <CartProvider>
+          <QuoteModalProvider>{children}</QuoteModalProvider>
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );

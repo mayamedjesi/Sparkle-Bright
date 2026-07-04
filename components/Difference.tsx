@@ -32,9 +32,9 @@ export default function Difference() {
           It Matters Most
         </h2>
         <p className="sectionBody">
-          Winter installations are unforgiving. A bulb out on opening night, a
-          strand down before the mayor&apos;s photo-op — those are the moments
-          that define a vendor relationship.
+          Making Cities Sparkle! only works if someone shows up when a strand
+          goes dark on opening night or a bulb fails before the mayor&apos;s
+          photo-op. Those are the moments that separate a vendor from a partner.
         </p>
 
         <div className="diffList">
@@ -53,11 +53,11 @@ export default function Difference() {
       <div className="diffVisual">
         <div className="goldBar" />
         <p className="diffQuote">
-          &ldquo;The measure of a supplier isn&apos;t how they perform when
-          everything goes right — it&apos;s how fast they move when it
-          doesn&apos;t.&rdquo;
+          &ldquo;Making Cities Sparkle! is easy to say. The hard part is still
+          sparkling five years later — when the weather turns, the timeline
+          shifts, and every other vendor has gone quiet.&rdquo;
         </p>
-        <div className="diffQuoteAttr">SparkleBright Operations Principle</div>
+        <div className="diffQuoteAttr">SparkleBright — Making Cities Sparkle!</div>
       </div>
     </div>
   );

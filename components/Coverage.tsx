@@ -20,13 +20,15 @@ export default function Coverage() {
     <section className="coverageSection" id="coverage">
       <div className="sectionEyebrow">Service Area</div>
       <h2 className="sectionTitle">
-        Serving All of
+        Cities Across
         <br />
         Western Canada
       </h2>
       <p className="sectionBody">
-        From mid-sized municipalities to major metropolitan centres, we operate
-        across every province and territory west of Ontario.
+        From mid-sized municipalities to major metropolitan centres, our team is
+        on the ground across every province and territory west of Ontario. Wherever
+        your city is, we&apos;re close enough to show up when it matters —
+        and committed enough to make it sparkle.
       </p>
       <div className="coverageTags">
         {regions.map((region) => (
