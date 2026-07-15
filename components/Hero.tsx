@@ -27,13 +27,12 @@ export default function Hero() {
 
       <p className="heroSubtitle">
         SparkleBright specializes in the custom design and supply of seasonal
-        lighting displays tailored to each community&apos;s unique identity. From
-        iconic downtown landmarks to vibrant public gathering spaces, our curated
-        lighting displays create memorable, photo-worthy experiences that attract
-        visitors, encourage social sharing, and celebrate the unique character of
-        your community — a welcoming atmosphere that inspires connection, pride,
-        and wonder. Book your consultation today and let us help illuminate your
-        community&apos;s story.
+        lighting displays that reflect the unique identity of every community.
+        From iconic downtown landmarks to parks, streetscapes, and public
+        gathering spaces, our custom displays transform ordinary places into
+        vibrant destinations. By creating memorable, photo-worthy experiences,
+        our displays encourage tourism, increase foot traffic, inspire social
+        sharing, and foster community pride.
       </p>
 
       <div className="heroActions">

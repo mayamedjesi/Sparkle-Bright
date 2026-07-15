@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="footerCopy">
         © {new Date().getFullYear()} SparkleBright. All rights reserved.
       </div>
-      <div className="footerTagline">Western Canada · Municipal Lighting</div>
+      <div className="footerTagline">Canada-Wide · Municipal Lighting</div>
     </footer>
   );
 }

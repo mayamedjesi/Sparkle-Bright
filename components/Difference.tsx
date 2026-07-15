@@ -7,7 +7,7 @@ const differentiators = [
   {
     number: "02",
     title: "Western Canada, On the Ground",
-    desc: "Our team is local. We don't ship from overseas and hope for the best — we're here, in your province, ready to respond.",
+    desc: "Our team is local. We're here, in your province, ready to respond.",
   },
   {
     number: "03",
@@ -53,11 +53,11 @@ export default function Difference() {
       <div className="diffVisual">
         <div className="goldBar" />
         <p className="diffQuote">
-          &ldquo;Making Cities Sparkle! is easy to say. The hard part is still
-          sparkling five years later — when the weather turns, the timeline
-          shifts, and every other vendor has gone quiet.&rdquo;
+          &ldquo;When the streets have quieted and snow blankets the landscape,
+          our lights softly illuminate the night, creating a peaceful sense of
+          beauty, warmth, and wonder.&rdquo;
         </p>
-        <div className="diffQuoteAttr">SparkleBright — Making Cities Sparkle!</div>
+        <div className="diffQuoteAttr">SparkleBright</div>
       </div>
     </div>
   );

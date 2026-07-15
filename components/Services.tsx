@@ -1,7 +1,7 @@
 const services = [
   {
     name: "Municipal Streetscapes",
-    desc: "We transform city centres, main streets, and public squares into winter destinations worth travelling to. We design and supply the displays — and coordinate with your local crews who put them up — so your team gets a turnkey look without the overseas guesswork.",
+    desc: "We transform city centres, main streets, and public squares into winter destinations worth travelling to. We design and supply the displays — and coordinate with your local crews who put them up — so your team gets a turnkey look without the guesswork.",
     icon: (
       <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M20 4L4 14V26L20 36L36 26V14L20 4Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
@@ -78,10 +78,12 @@ export default function Services() {
           Designed to Sparkle
         </h2>
         <p className="sectionBody">
-          Making Cities Sparkle! isn&apos;t a tagline — it&apos;s the brief we
-          give every project. From a single commercial property to an entire
-          downtown core, we handle the design and supply so your city&apos;s own
-          crews can bring it to life on the ground.
+          Making Cities Sparkle isn&apos;t just our tagline&mdash;it&apos;s the
+          standard behind every project we deliver. From a single commercial
+          property to an entire downtown core, SparkleBright partners with
+          municipalities to design and supply custom seasonal lighting,
+          streetscape enhancements, and decorative displays that reflect each
+          community&apos;s unique identity.
         </p>
       </div>
       <div className="servicesGrid">

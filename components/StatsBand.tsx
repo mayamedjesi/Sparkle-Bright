@@ -2,7 +2,7 @@ const stats = [
   { number: "10+", label: "Years Experience" },
   { number: "1 Year", label: "Product Warranty" },
   { number: "5 Days", label: "Replacement Commitment" },
-  { number: "100%", label: "Western Canada Support" },
+  { number: "100%", label: "Canada-Wide Support" },
 ];
 
 export default function StatsBand() {

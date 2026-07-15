@@ -21,7 +21,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "SparkleBright — Municipal & Decorative Lighting",
   description:
-    "High-quality Christmas lighting for cities, airports, commercial properties, and public spaces across Western Canada.",
+    "High-quality Christmas lighting for cities, airports, commercial properties, and public spaces across Canada.",
 };
 
 export default function RootLayout({
