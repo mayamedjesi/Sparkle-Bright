@@ -1430,6 +1430,20 @@ export const categories: Category[] = [
         url: "#",
         image: "/CitySignMarquee.png",
       },
+      {
+        name: "YYC Airport Letters",
+        desc: "Large-format illuminated YYC letters in warm gold LED rope light — Calgary's airport code rendered as a landmark marquee. Ideal for terminal welcome zones, civic plazas, and photo moments. Fully customizable in size and colour.",
+        tag: "New",
+        url: "#",
+        image: "/YYCAirportLetters.webp",
+      },
+      {
+        name: "YXE Airport Letters",
+        desc: "Large-format illuminated YXE letters in warm gold LED rope light — Saskatoon's airport code rendered as a landmark marquee. Ideal for terminal welcome zones, civic plazas, and photo moments. Fully customizable in size and colour.",
+        tag: "New",
+        url: "#",
+        image: "/YXEAirportLetters.webp",
+      },
     ],
   },
   {
