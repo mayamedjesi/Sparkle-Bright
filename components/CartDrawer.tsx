@@ -94,11 +94,16 @@ export default function CartDrawer() {
         aria-hidden={!isOpen}
       />
 
-      <aside
+      {/* A <div> rather than <aside>: <aside> carries an implicit
+          `complementary` role, and `dialog` is not an allowed override for it.
+          `inert` while closed keeps the off-screen panel out of the tab order
+          and stops screen readers announcing a modal that isn't open. */}
+      <div
         className={`cartDrawer ${isOpen ? "cartDrawerOpen" : ""}`}
         role="dialog"
         aria-modal="true"
         aria-label="Your quote cart"
+        inert={!isOpen}
       >
         <div className="cartHeader">
           <h2 className="cartTitle">
@@ -290,7 +295,7 @@ export default function CartDrawer() {
             </div>
           </>
         )}
-      </aside>
+      </div>
     </>
   );
 }

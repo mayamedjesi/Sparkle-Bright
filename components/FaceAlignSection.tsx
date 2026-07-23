@@ -1,9 +1,6 @@
 "use client";
 
 import { useRef, useState, useEffect, useCallback } from "react";
-import { categories } from "@/lib/products";
-
-const lightingStructuresCategory = categories.find((c) => c.id === "lighting-structures")!;
 
 // Face-board faceProducts — green-fill cutouts for chroma-keying.
 // Only the dedicated face board is offered right now.
@@ -152,7 +149,7 @@ function drawComposite(
   ctx.drawImage(maskedTemplate, 0, 0, width, height);
 }
 
-export default function FaceAlignSection() {
+export default function FaceAlignSection({ seeAllUrl }: { seeAllUrl: string }) {
   const videoRef    = useRef<HTMLVideoElement>(null);
   const canvasRef   = useRef<HTMLCanvasElement>(null);
   const streamRef   = useRef<MediaStream | null>(null);
@@ -196,24 +193,22 @@ export default function FaceAlignSection() {
     setCameraOn(false);
     setCaptured(false);
 
+    // Any template already built belongs to the previous product.
+    maskedTemplateRef.current = null;
+    boundsRef.current = null;
+    setGreenBounds(null);
+
     const img = new Image();
     img.crossOrigin = "anonymous";
     img.onload = () => {
       imgRef.current = img;
 
-      try {
-        const { canvas: masked, bounds } = buildMaskedTemplate(img, img.naturalWidth, img.naturalHeight);
-        maskedTemplateRef.current = masked;
-        boundsRef.current = bounds;
-        setGreenBounds(bounds);
-      } catch (err) {
-        // If this throws (e.g. a tainted canvas from a cross-origin image),
-        // log it so the cause is visible in devtools rather than failing silently.
-        console.error("FaceAlign: failed to build masked template", err);
-        maskedTemplateRef.current = null;
-        boundsRef.current = null;
-        setGreenBounds(null);
-      }
+      // NOTE: the chroma-key mask is deliberately NOT built here. It walks
+      // every pixel of a ~1122x1402 image twice (getImageData + a full
+      // per-pixel pass + putImageData), which blocks the main thread long
+      // enough to delay the hero's Largest Contentful Paint on a throttled
+      // mobile CPU — even for the vast majority of visitors who never open
+      // the camera. It is built on demand in ensureMaskedTemplate() instead.
 
       setImgSize({ w: img.naturalWidth, h: img.naturalHeight });
 
@@ -267,6 +262,32 @@ export default function FaceAlignSection() {
     draw();
   }, []);
 
+  // Builds the chroma-key mask for the current template, once, on first use.
+  // Called from startCamera so the cost lands on an explicit user action
+  // rather than on page load.
+  const ensureMaskedTemplate = useCallback(() => {
+    if (maskedTemplateRef.current) return;
+    const img = imgRef.current;
+    if (!img || img.naturalWidth === 0) return;
+    try {
+      const { canvas: masked, bounds } = buildMaskedTemplate(
+        img,
+        img.naturalWidth,
+        img.naturalHeight,
+      );
+      maskedTemplateRef.current = masked;
+      boundsRef.current = bounds;
+      setGreenBounds(bounds);
+    } catch (err) {
+      // e.g. a tainted canvas from a cross-origin image — log rather than
+      // fail silently, and fall back to compositing without a mask.
+      console.error("FaceAlign: failed to build masked template", err);
+      maskedTemplateRef.current = null;
+      boundsRef.current = null;
+      setGreenBounds(null);
+    }
+  }, []);
+
   const startCamera = useCallback(async () => {
     setCameraError(null);
     setCaptured(false);
@@ -290,12 +311,14 @@ export default function FaceAlignSection() {
         canvas.height = video.videoHeight || 1024;
       }
 
+      ensureMaskedTemplate();
+
       setCameraOn(true);
       startLoop();
     } catch {
       setCameraError("Camera access was denied or is unavailable on this device.");
     }
-  }, [startLoop]);
+  }, [startLoop, ensureMaskedTemplate]);
 
   // Cancel out of the live preview entirely, back to the placeholder.
   const stopCamera = useCallback(() => {
@@ -514,7 +537,7 @@ export default function FaceAlignSection() {
           )}
 
           {currentProduct && (
-            <a className="btnPrimary faceAlignViewBtn" href={lightingStructuresCategory.seeAllUrl}>
+            <a className="btnPrimary faceAlignViewBtn" href={seeAllUrl}>
               View Listing
               <svg width="13" height="13" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>

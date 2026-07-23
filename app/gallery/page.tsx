@@ -102,7 +102,7 @@ function GalleryInner() {
       <ScrollReveal />
       <Nav />
 
-      <div className="galleryPage">
+      <main className="galleryPage">
         {/* Header */}
         <div className="galleryHero">
           <div className="galleryHeroInner">
@@ -243,7 +243,7 @@ function GalleryInner() {
                   </div>
                   <div className="productCardBody">
                     <div className="productCardTop">
-                      <h3 className="productName">{product.name}</h3>
+                      <h2 className="productName">{product.name}</h2>
                       <p className="productDesc">{product.desc}</p>
                     </div>
                     <AddToCartControl
@@ -270,7 +270,7 @@ function GalleryInner() {
             </button>
           </div>
         )}
-      </div>
+      </main>
 
       <Footer />
       <BackToTop />

@@ -1575,3 +1575,39 @@ export const allProducts: FlatProduct[] = categories.flatMap((cat) =>
     categoryName: cat.name,
   }))
 );
+
+// ── Homepage helpers ──────────────────────────────────────────────────────
+// These run on the server so that the client bundle never has to import the
+// full catalogue. The homepage renders 6 products per category; shipping all
+// 219 to the browser just to slice them there wastes ~19 KB gzipped.
+
+// Tag priority — higher = shown first.
+// Order: Most Popular → Featured → Best Seller / Essential / New / Custom → untagged
+const TAG_PRIORITY: Record<string, number> = {
+  "Most Popular": 5,
+  "Featured":     4,
+  "Best Seller":  3,
+  "Essential":    2,
+  "New":          1,
+  "Custom":       0,
+};
+
+function tagScore(tag: string | null): number {
+  if (!tag) return -1;
+  return TAG_PRIORITY[tag] ?? 0;
+}
+
+/** Categories with only the top `limit` products each, sorted by tag priority. */
+export function featuredCategories(limit = 6): Category[] {
+  return categories.map((cat) => ({
+    ...cat,
+    products: [...cat.products]
+      .sort((a, b) => tagScore(b.tag) - tagScore(a.tag))
+      .slice(0, limit),
+  }));
+}
+
+/** Just the link target for a category — avoids importing the catalogue. */
+export function categoryUrl(id: string): string {
+  return categories.find((c) => c.id === id)?.seeAllUrl ?? "/gallery";
+}

@@ -8,12 +8,23 @@ export default function BackToTop() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    function handleScroll() {
+    // Reading scrollY forces the browser to settle layout, so do it at most
+    // once per animation frame rather than on every scroll event.
+    let pending = 0;
+    function read() {
+      pending = 0;
       setVisible(window.scrollY > SHOW_AFTER_PX);
     }
-    handleScroll();
+    function handleScroll() {
+      if (pending) return;
+      pending = requestAnimationFrame(read);
+    }
+    read();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (pending) cancelAnimationFrame(pending);
+    };
   }, []);
 
   function scrollToTop() {

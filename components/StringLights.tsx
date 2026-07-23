@@ -11,6 +11,8 @@ interface Light {
   phase: number;
   speed: number;
   size: number;
+  /** Built once per light instead of per frame — see the animate loop. */
+  glow: CanvasGradient | null;
 }
 
 const STRINGS = 6;
@@ -22,7 +24,7 @@ export default function StringLights() {
   const frameRef = useRef(0);
   const rafRef = useRef<number>(0);
 
-  function initLights(canvas: HTMLCanvasElement) {
+  function initLights(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     const lights: Light[] = [];
     const w = canvas.width;
     const h = canvas.height;
@@ -56,9 +58,23 @@ export default function StringLights() {
           phase: Math.random() * Math.PI * 2,
           speed: 0.4 + Math.random() * 1.2,
           size: 2.5 + Math.random() * 2,
+          glow: null,
         });
       }
     }
+    // Build each light's radial gradient once. The stops use fixed alphas and
+    // per-frame brightness is applied via ctx.globalAlpha, which multiplies —
+    // mathematically identical to rebuilding the gradient with scaled stops,
+    // but without allocating a CanvasGradient per light per frame.
+    for (const l of lights) {
+      const [r, g, b] = l.color;
+      const grad = ctx.createRadialGradient(l.x, l.y, 0, l.x, l.y, l.size * 5);
+      grad.addColorStop(0, `rgba(${r},${g},${b},0.9)`);
+      grad.addColorStop(0.4, `rgba(${r},${g},${b},0.3)`);
+      grad.addColorStop(1, `rgba(${r},${g},${b},0)`);
+      l.glow = grad;
+    }
+
     lightsRef.current = lights;
   }
 
@@ -84,16 +100,55 @@ export default function StringLights() {
     if (!ctx) return;
 
     function resize() {
-      if (!canvas) return;
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-      initLights(canvas);
+      if (!canvas || !ctx) return;
+      // Read both geometry values BEFORE writing either. Interleaving them
+      // (read offsetWidth -> write canvas.width -> read offsetHeight)
+      // invalidates layout between the reads and forces a second reflow.
+      const w = canvas.offsetWidth;
+      const h = canvas.offsetHeight;
+      canvas.width = w;
+      canvas.height = h;
+      initLights(canvas, ctx);
+    }
+
+    // Coalesce resize bursts into one reflow per frame.
+    let resizePending = 0;
+    function onResize() {
+      if (resizePending) return;
+      resizePending = requestAnimationFrame(() => {
+        resizePending = 0;
+        resize();
+      });
     }
 
     resize();
-    window.addEventListener("resize", resize);
+    window.addEventListener("resize", onResize);
 
-    function animate() {
+    // Visitors who ask for reduced motion get a single static frame.
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    // Only animate while the canvas is actually on screen. Without this the
+    // loop keeps rendering 108 lights every frame for the whole session, even
+    // once the visitor has scrolled well past it.
+    let onScreen = true;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        const nowVisible = entry.isIntersecting;
+        if (nowVisible === onScreen) return;
+        onScreen = nowVisible;
+        if (onScreen && !reducedMotion) {
+          rafRef.current = requestAnimationFrame(animate);
+        } else {
+          cancelAnimationFrame(rafRef.current);
+        }
+      },
+      { rootMargin: "100px" },
+    );
+    io.observe(canvas);
+
+    function drawFrame() {
       if (!canvas || !ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       frameRef.current++;
@@ -107,32 +162,41 @@ export default function StringLights() {
         l.alpha = Math.max(0.05, Math.min(1, l.alpha));
 
         const [r, g, b] = l.color;
-        const glow = ctx.createRadialGradient(
-          l.x, l.y, 0,
-          l.x, l.y, l.size * 5
-        );
-        glow.addColorStop(0, `rgba(${r},${g},${b},${l.alpha * 0.9})`);
-        glow.addColorStop(0.4, `rgba(${r},${g},${b},${l.alpha * 0.3})`);
-        glow.addColorStop(1, `rgba(${r},${g},${b},0)`);
 
-        ctx.beginPath();
-        ctx.arc(l.x, l.y, l.size * 5, 0, Math.PI * 2);
-        ctx.fillStyle = glow;
-        ctx.fill();
+        ctx.globalAlpha = l.alpha;
+
+        if (l.glow) {
+          ctx.beginPath();
+          ctx.arc(l.x, l.y, l.size * 5, 0, Math.PI * 2);
+          ctx.fillStyle = l.glow;
+          ctx.fill();
+        }
 
         ctx.beginPath();
         ctx.arc(l.x, l.y, l.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${r},${g},${b},${l.alpha})`;
+        ctx.fillStyle = `rgb(${r},${g},${b})`;
         ctx.fill();
+
+        ctx.globalAlpha = 1;
       }
 
+    }
+
+    function animate() {
+      drawFrame();
       rafRef.current = requestAnimationFrame(animate);
     }
 
-    animate();
+    if (reducedMotion) {
+      drawFrame();
+    } else {
+      animate();
+    }
 
     return () => {
-      window.removeEventListener("resize", resize);
+      io.disconnect();
+      window.removeEventListener("resize", onResize);
+      if (resizePending) cancelAnimationFrame(resizePending);
       cancelAnimationFrame(rafRef.current);
     };
   }, []);

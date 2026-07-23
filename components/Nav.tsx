@@ -156,7 +156,14 @@ export default function Nav() {
       </nav>
 
       {/* Mobile drawer */}
-      <div className={`mobileDrawer ${mobileOpen ? "mobileDrawerOpen" : ""}`} aria-hidden={!mobileOpen}>
+      {/* `inert` (not aria-hidden) while closed: the panel is only translated
+          off-screen, so without this its links stay in the tab order and
+          keyboard users tab through an invisible menu. `inert` removes the
+          subtree from both the tab order and the accessibility tree. */}
+      <div
+        className={`mobileDrawer ${mobileOpen ? "mobileDrawerOpen" : ""}`}
+        inert={!mobileOpen}
+      >
         <div className="mobileDrawerInner">
           {/* Home accordion */}
           <div className="mobileNavAccordion">

@@ -2,35 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { categories, Product } from "@/lib/products";
+import type { Category, Product } from "@/lib/products";
 import ImageLightbox from "./ImageLightbox";
 import AddToCartControl from "./AddToCartControl";
 import { responsiveImage } from "@/lib/responsiveImage";
-
-// Tag priority — higher = shown first
-// Order: Most Popular → Featured → Best Seller / Essential / New / Custom → no tag
-const TAG_PRIORITY: Record<string, number> = {
-  "Most Popular": 5,
-  "Featured":     4,
-  "Best Seller":  3,
-  "Essential":    2,
-  "New":          1,
-  "Custom":       0,
-};
-
-function tagScore(tag: string | null): number {
-  if (!tag) return -1;
-  return TAG_PRIORITY[tag] ?? 0;
-}
-
-// Sort products so tagged ones come first (Most Popular at top), then pick top N
-function prioritised(products: Product[], limit: number): Product[] {
-  return [...products]
-    .sort((a, b) => tagScore(b.tag) - tagScore(a.tag))
-    .slice(0, limit);
-}
-
-const PRODUCTS_PER_CATEGORY = 6;
 
 function TagBadge({ tag }: { tag: string }) {
   const isNew = tag === "New";
@@ -42,7 +17,7 @@ function TagBadge({ tag }: { tag: string }) {
   );
 }
 
-export default function Products() {
+export default function Products({ categories }: { categories: Category[] }) {
   const router = useRouter();
   const [lightboxProduct, setLightboxProduct] = useState<Product | null>(null);
 
@@ -50,15 +25,15 @@ export default function Products() {
     <section className="productsSection" id="products">
 
       {categories.map((cat, catIdx) => {
-        const limit = PRODUCTS_PER_CATEGORY;
-        const featured = prioritised(cat.products, limit);
+        // Already sliced and sorted on the server — see featuredCategories().
+        const featured = cat.products;
         return (
           <div key={cat.id} className="productCategory" id={cat.id}>
             <div className="productCategoryHeader">
               <div className="productCategoryMeta">
                 <span className="productCategoryNumber">0{catIdx + 1}</span>
                 <div>
-                  <h3 className="productCategoryName">{cat.name}</h3>
+                  <h2 className="productCategoryName">{cat.name}</h2>
                   <p className="productCategoryDesc">{cat.description}</p>
                 </div>
               </div>
@@ -119,7 +94,7 @@ export default function Products() {
                   </div>
                   <div className="productCardBody">
                     <div className="productCardTop">
-                      <h4 className="productName">{product.name}</h4>
+                      <h3 className="productName">{product.name}</h3>
                       <p className="productDesc">{product.desc}</p>
                     </div>
                     <AddToCartControl
