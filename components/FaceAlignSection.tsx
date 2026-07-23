@@ -13,7 +13,7 @@ const faceProducts = [
     desc: "Step inside the display — align your face with Santa or Rudolph.",
     tag: "Featured" as const,
     url: "#",
-    image: "/SantaReindeerFaceBoard.png",
+    image: "/SantaReindeerFaceBoard.webp",
   },
 ];
 
@@ -400,6 +400,7 @@ export default function FaceAlignSection() {
                   src={currentProduct.image}
                   alt={currentProduct.name}
                   className="faceAlignPlaceholderBg"
+                  decoding="async"
                 />
               )}
               <div className="faceAlignPlaceholderOverlay" aria-hidden="true" />

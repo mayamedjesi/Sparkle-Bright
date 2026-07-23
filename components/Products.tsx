@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { categories, Product } from "@/lib/products";
 import ImageLightbox from "./ImageLightbox";
 import AddToCartControl from "./AddToCartControl";
+import { responsiveImage } from "@/lib/responsiveImage";
 
 // Tag priority — higher = shown first
 // Order: Most Popular → Featured → Best Seller / Essential / New / Custom → no tag
@@ -85,7 +86,13 @@ export default function Products() {
                   }}
                 >
                   <div className="productImageWrap">
-                    <img src={product.image} alt={product.name} className="productImage" loading="lazy" />
+                    <img
+                      {...responsiveImage(product.image)}
+                      alt={product.name}
+                      className="productImage"
+                      loading="lazy"
+                      decoding="async"
+                    />
                     <div className="productImageOverlay" />
                     <button
                       className="productImageExpandBtn"

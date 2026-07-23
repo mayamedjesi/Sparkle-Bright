@@ -10,6 +10,7 @@ import BackToTop from "@/components/BackToTop";
 import { QuoteModalProvider } from "@/components/QuoteModalContext";
 import ScrollReveal from "@/components/ScrollReveal";
 import ImageLightbox from "@/components/ImageLightbox";
+import { responsiveImage } from "@/lib/responsiveImage";
 import AddToCartControl from "@/components/AddToCartControl";
 
 // ── Fuzzy match ────────────────────────────────────
@@ -210,9 +211,11 @@ function GalleryInner() {
                 <div key={`${product.categoryId}-${product.name}`} className="galleryCard">
                   <div className="productImageWrap">
                     <img
-                      src={product.image}
+                      {...responsiveImage(product.image)}
                       alt={product.name}
                       className="productImage"
+                      loading="lazy"
+                      decoding="async"
                       onError={(e) => {
                         (e.target as HTMLImageElement).style.opacity = "0";
                       }}

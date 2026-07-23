@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useCart } from "./CartContext";
+import { thumbnailImage } from "@/lib/responsiveImage";
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xpqevrbp";
 
@@ -142,7 +143,13 @@ export default function CartDrawer() {
             <div className="cartItems">
               {items.map((item) => (
                 <div className="cartItem" key={item.name}>
-                  <img src={item.image} alt={item.name} className="cartItemImg" />
+                  <img
+                    {...thumbnailImage(item.image)}
+                    alt={item.name}
+                    className="cartItemImg"
+                    loading="lazy"
+                    decoding="async"
+                  />
                   <div className="cartItemInfo">
                     <div className="cartItemName">{item.name}</div>
                     <div className="cartItemCat">{item.category}</div>

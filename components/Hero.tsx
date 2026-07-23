@@ -1,18 +1,11 @@
 import QuoteButton from "./QuoteButton";
+import HeroVideo from "./HeroVideo";
 
 export default function Hero() {
   return (
     <div className="hero">
       {/* Background video */}
-      <video
-        className="heroBgVideo"
-        src="/hero.mp4"
-        autoPlay
-        loop
-        muted
-        playsInline
-        aria-hidden="true"
-      />
+      <HeroVideo />
       <div className="heroBgOverlay" aria-hidden="true" />
 
       <div className="heroEyebrow">
